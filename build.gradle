@@ -1,0 +1,72 @@
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+buildscript {
+    final String nexusPublicRepositoryUrl = 'http://192.241.179.41:9180/content/groups/public'
+
+    repositories {
+        maven { url nexusPublicRepositoryUrl }
+    }
+}
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+ext {
+    nexusPublicRepositoryUrl = 'http://192.241.179.41:9180/content/groups/public'
+}
+repositories {
+    maven { url "$nexusPublicRepositoryUrl" }
+}
+
+ext {
+    droolsVersion = '6.1.0.Final'
+    log4jVersion = '2.1'
+}
+
+configurations {
+	
+	jar_archive.extendsFrom compile
+}
+
+dependencies {
+
+	compile "org.drools:drools-core:$droolsVersion"
+	compile "org.drools:knowledge-api:$droolsVersion"
+	compile "org.kie:kie-api:$droolsVersion"
+	compile "org.kie:kie-internal:$droolsVersion"
+	
+	// The 3 following dependencies should be in jar_archive configuration,
+	// but because of the Eclipse IDE they are in the compile one.
+	compile "org.drools:drools-compiler:$droolsVersion"
+	compile 'org.eclipse.jdt:core:3.3.0-v_771'
+	compile 'org.mvel:mvel2:2.2.2.Final'
+	compile 'org.antlr:antlr-runtime:3.5.2'
+	
+	compile "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
+	compile "org.apache.logging.log4j:log4j-core:$log4jVersion"
+}
+
+// We should try to work with a single wrapper from within the root dir, not have it in each and every sub-project
+task wrapper(type: Wrapper) {
+
+    // The distribution will be unpacked to the $USER_HOME/.gradle/gradle/dists
+    archiveBase = Wrapper.PathBase.GRADLE_USER_HOME
+    archivePath = 'gradle/dists'
+    distributionUrl = 'https://services.gradle.org/distributions/gradle-2.2.1-all.zip'
+}
+
+task copyLibs(type: Copy, group: 'jar') {
+	from configurations.jar_archive
+	into "$buildDir/libs/dependencies"
+}
+
+jar {
+	manifest {
+        attributes(
+                'Main-Class': 'cz.skalicky.drools.playground.Main')
+    }
+    dependsOn copyLibs
+}
