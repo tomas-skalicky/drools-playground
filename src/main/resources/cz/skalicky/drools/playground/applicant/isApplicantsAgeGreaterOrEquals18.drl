@@ -1,0 +1,12 @@
+package cz.skalicky.drools.playground.applicant
+
+import cz.skalicky.drools.playground.applicant.Applicant
+
+rule "Is Applicant's age greater or equals 18"
+
+	when
+		$a : Applicant(age >= 18)
+	then
+		$a.setValid(true);
+
+end

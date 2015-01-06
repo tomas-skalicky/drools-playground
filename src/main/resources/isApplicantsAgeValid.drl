@@ -1,5 +1,0 @@
-rule "Is or valid age" when
-	$a : cz.skalicky.drools.playground.Applicant(age < 18)
-then
-	modify ($a) { setValid(false) };
-end

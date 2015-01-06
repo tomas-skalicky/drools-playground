@@ -2,4 +2,4 @@
 
 gw clean build
 
-java -cp build/libs/dependencies/*:build/libs/drools_playground.jar cz.skalicky.drools.playground.Main
+java -cp build/libs/dependencies/*:build/libs/drools_playground.jar cz.skalicky.drools.playground.applicant.Main

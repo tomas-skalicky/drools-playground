@@ -1,4 +1,4 @@
-package cz.skalicky.drools.playground;
+package cz.skalicky.drools.playground.applicant;
 
 public class Applicant {
 
