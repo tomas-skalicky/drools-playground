@@ -66,7 +66,7 @@ public class RuleTest {
             Applicant applicant = new Applicant();
             applicant.setAge(age);
             knowledgeSession.get().insert(applicant);
-            knowledgeSession.get().fireAllRules(1);
+            knowledgeSession.get().fireAllRules();
             
             for (Object o : knowledgeSession.get().getObjects()) {
                 if (o instanceof Applicant) {

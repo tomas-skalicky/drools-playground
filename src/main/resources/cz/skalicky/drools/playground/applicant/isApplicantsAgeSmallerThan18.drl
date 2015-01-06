@@ -5,7 +5,7 @@ import cz.skalicky.drools.playground.applicant.Applicant
 rule "Is Applicant's age smaller than 18"
 
 	when
-		$a : Applicant(age < 18)
+		$a : Applicant(age < 18, valid == true)
 	then
 		$a.setValid(false);
 
