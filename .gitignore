@@ -32,3 +32,10 @@ Servers/
 .idea/
 *.iml
 
+
+
+#####
+# Temporary files
+#####
+*.log
+
